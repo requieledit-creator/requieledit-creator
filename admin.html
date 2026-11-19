@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REQUIEL EDIT — Panel de Administración (CMS)</title>
+  <meta name="theme-color" content="#09090b">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 63,38 98,50 63,62 50,95 37,62 2,50 37,38' fill='%2300f0ff'/></svg>">
+</head>
+<body>
+
+  <!-- =========================================================================
+       GATEWAY DE SEGURIDAD (LOGIN POR PIN)
+       ========================================================================= -->
+  <div class="pin-auth-overlay" id="pin-overlay">
+    <div class="pin-card">
+      <div class="pin-logo-symbol">
+        <img src="logo negocio 2.jpg" alt="Logo REQUIEL EDIT" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px;">
+      </div>
+      <h2 class="pin-title">REQUIEL EDIT CMS</h2>
+      <p class="pin-desc">Ingresa tu PIN de seguridad para acceder a la configuración del portafolio (Por defecto: 1234).</p>
+
+      <form id="pin-form">
+        <div class="pin-input-group">
+          <input type="password" maxlength="1" class="pin-digit-input" id="pin-1" autofocus autocomplete="off">
+          <input type="password" maxlength="1" class="pin-digit-input" id="pin-2" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-digit-input" id="pin-3" autocomplete="off">
+          <input type="password" maxlength="1" class="pin-digit-input" id="pin-4" autocomplete="off">
+        </div>
+        <button type="submit" class="btn-unlock" id="btn-unlock">DESBLOQUEAR PANEL</button>
+        <div class="pin-error-text" id="pin-error-msg">PIN incorrecto. Intenta de nuevo.</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SIDEBAR DE NAVEGACIÓN DEL CMS
+       ========================================================================= -->
+  <aside class="admin-sidebar">
+    <div>
+      <div class="admin-brand">
+        <img src="logo negocio 2.jpg" alt="Logo REQUIEL EDIT" style="width: 36px; height: 36px; object-fit: contain; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);">
+        <div>
+          <div style="font-family: 'Permanent Marker', cursive; font-size: 1.15rem; color: #ffffff;">REQUIEL EDIT</div>
+          <div style="font-size: 0.7rem; color: var(--text-dim);">PANEL DE CONTROL</div>
+        </div>
+      </div>
+
+      <ul class="admin-nav">
+        <li class="admin-nav-item active" data-tab="tab-pages">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Páginas & Textos</span>
+        </li>
+        <li class="admin-nav-item" data-tab="tab-theme">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 0 0 14c2.5 0 3-1.5 5-1.5s2 1.5 3 0"/></svg>
+          <span>Colores & Tema</span>
+        </li>
+        <li class="admin-nav-item" data-tab="tab-multimedia">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          <span>Multimedia & Videos</span>
+        </li>
+        <li class="admin-nav-item" data-tab="tab-contact">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>Redes & Contacto</span>
+        </li>
+        <li class="admin-nav-item" data-tab="tab-security">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Seguridad (PIN)</span>
+        </li>
+        <li class="admin-nav-item" data-tab="tab-backup">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Copia de Seguridad</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="admin-sidebar-footer">
+      <a href="index.html" class="btn-sidebar-link">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Ver Portafolio en Vivo</span>
+      </a>
+      <button class="btn-sidebar-link" id="btn-lock-session" style="cursor: pointer; width: 100%;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Bloquear Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       ÁREA PRINCIPAL DE CONTENIDO
+       ========================================================================= -->
+  <main class="admin-main-area">
+
+    <div class="admin-header-row">
+      <div>
+        <h1 class="admin-page-title" id="tab-title-display">Páginas & Textos</h1>
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 4px;">Configura y gestiona cada sección de tu portafolio.</p>
+      </div>
+
+      <div class="admin-actions-bar">
+        <button class="btn-cms-action primary" id="btn-save-all">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Guardar Cambios</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 1: PÁGINAS & TEXTOS
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel active" id="tab-pages">
+      <div class="cms-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h3 class="cms-card-title" style="margin-bottom: 0;">Lista de Diapositivas Activas</h3>
+          <button class="btn-cms-action" id="btn-add-slide">
+            <span>+ Agregar Diapositiva</span>
+          </button>
+        </div>
+
+        <div class="slides-management-list" id="slides-list-container">
+          <!-- Inyectado dinámicamente con JS -->
+        </div>
+      </div>
+
+      <!-- Editor de la diapositiva seleccionada -->
+      <div class="cms-card" id="slide-editor-card" style="display: none;">
+        <h3 class="cms-card-title">Editar Diapositiva: <span id="editing-slide-name" style="color: var(--admin-accent);"></span></h3>
+
+        <div class="form-grid-2">
+          <div class="cms-field">
+            <label for="edit-slide-badge">Badge Superior</label>
+            <input type="text" id="edit-slide-badge" class="cms-input">
+          </div>
+          <div class="cms-field">
+            <label for="edit-slide-title">Título Principal</label>
+            <input type="text" id="edit-slide-title" class="cms-input">
+          </div>
+        </div>
+
+        <div class="cms-field">
+          <label for="edit-slide-subtitle">Subtítulo / Eslogan</label>
+          <input type="text" id="edit-slide-subtitle" class="cms-input">
+        </div>
+
+        <div class="cms-field">
+          <label for="edit-slide-desc">Descripción / Texto</label>
+          <textarea id="edit-slide-desc" class="cms-textarea" rows="3"></textarea>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="cms-field">
+            <label for="edit-slide-btn-text">Texto del Botón de Acción</label>
+            <input type="text" id="edit-slide-btn-text" class="cms-input">
+          </div>
+          <div class="cms-field">
+            <label for="edit-slide-target">Destino de la Diapositiva</label>
+            <input type="text" id="edit-slide-target" class="cms-input">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 1rem;">
+          <button class="btn-cms-action primary" id="btn-apply-slide-edit">Aplicar Cambios a Diapositiva</button>
+          <button class="btn-cms-action" id="btn-cancel-slide-edit">Cerrar Editor</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 2: COLORES & TEMA
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel" id="tab-theme">
+      <div class="cms-card">
+        <h3 class="cms-card-title">Paleta de Colores Futurista</h3>
+
+        <div class="form-grid-3">
+          <div class="cms-field">
+            <label for="color-bg">Color de Fondo Primario</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="color-bg" class="color-input-bubble" value="#050505">
+              <input type="text" id="color-bg-hex" class="cms-input" value="#050505">
+            </div>
+          </div>
+
+          <div class="cms-field">
+            <label for="color-cyan">Acento Cian (Highlights)</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="color-cyan" class="color-input-bubble" value="#00f0ff">
+              <input type="text" id="color-cyan-hex" class="cms-input" value="#00f0ff">
+            </div>
+          </div>
+
+          <div class="cms-field">
+            <label for="color-yellow">Acento Amarillo (Estrella Logo)</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="color-yellow" class="color-input-bubble" value="#ffe600">
+              <input type="text" id="color-yellow-hex" class="cms-input" value="#ffe600">
+            </div>
+          </div>
+
+          <div class="cms-field">
+            <label for="color-red">Acento Rojo (3D Glasses)</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="color-red" class="color-input-bubble" value="#ff3366">
+              <input type="text" id="color-red-hex" class="cms-input" value="#ff3366">
+            </div>
+          </div>
+
+          <div class="cms-field">
+            <label for="color-text">Color de Texto Principal</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="color-text" class="color-input-bubble" value="#f5f5f7">
+              <input type="text" id="color-text-hex" class="cms-input" value="#f5f5f7">
+            </div>
+          </div>
+
+          <div class="cms-field">
+            <label for="color-border">Bordes de Vidrio (Glassmorphism)</label>
+            <div class="color-picker-wrap">
+              <input type="text" id="color-border-val" class="cms-input" value="rgba(255, 255, 255, 0.12)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cms-card">
+        <h3 class="cms-card-title">Animaciones y Efectos Visuales</h3>
+
+        <div class="form-grid-2">
+          <div class="cms-field">
+            <label for="anim-type-select">Estilo de Animación de Entrada</label>
+            <select id="anim-type-select" class="cms-select">
+              <option value="fade-up">Fade In + Slide Up (Recomendado Elegante)</option>
+              <option value="blur-reveal">Blur Reveal (Desenfoque a Nítido)</option>
+              <option value="scale-in">Scale In (Zoom suave)</option>
+              <option value="slide-horizontal">Slide Horizontal (Corte de edición)</option>
+            </select>
+          </div>
+
+          <div class="cms-field">
+            <label for="anim-speed-select">Velocidad de Transición</label>
+            <select id="anim-speed-select" class="cms-select">
+              <option value="0.4s">Rápida (0.4s)</option>
+              <option value="0.6s" selected>Suave y Elegante (0.6s)</option>
+              <option value="0.9s">Cinematográfica (0.9s)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 3: MULTIMEDIA & VIDEOS
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel" id="tab-multimedia">
+      <div class="cms-card">
+        <h3 class="cms-card-title">Videos de Servicios y Demostraciones</h3>
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Pega enlaces directos a videos MP4 o fuentes de video para actualizar los reproductores de cada servicio en tiempo real.
+        </p>
+
+        <div class="cms-field">
+          <label for="video-url-videoclips">Video para VIDEOCLIPS (Grabación & Edición)</label>
+          <input type="text" id="video-url-videoclips" class="cms-input" placeholder="https://...archivo.mp4">
+        </div>
+
+        <div class="cms-field">
+          <label for="video-url-postpubli">Video para POST-PUBLICIDAD (Reels / TikTok / Ads)</label>
+          <input type="text" id="video-url-postpubli" class="cms-input" placeholder="https://...archivo.mp4">
+        </div>
+
+        <div class="cms-field">
+          <label for="video-url-fotografia">Video / Muestra para FOTOGRAFÍA</label>
+          <input type="text" id="video-url-fotografia" class="cms-input" placeholder="https://...archivo.mp4">
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 4: REDES SOCIALES & CONTACTO
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel" id="tab-contact">
+      <div class="cms-card">
+        <h3 class="cms-card-title">Canales de Contacto Directo</h3>
+
+        <div class="form-grid-2">
+          <div class="cms-field">
+            <label for="contact-phone">Número de Teléfono / WhatsApp</label>
+            <input type="text" id="contact-phone" class="cms-input" value="+57 3106194286">
+          </div>
+          <div class="cms-field">
+            <label for="contact-email">Correo Electrónico Oficial</label>
+            <input type="email" id="contact-email" class="cms-input" value="requiel.edit@gmail.com">
+          </div>
+        </div>
+
+        <div class="cms-field">
+          <label for="contact-tagline">Eslogan de Marca</label>
+          <input type="text" id="contact-tagline" class="cms-input" value="Vuelven a surgir y revivir">
+        </div>
+      </div>
+
+      <div class="cms-card">
+        <h3 class="cms-card-title">Enlaces de Redes Sociales (Barra Superior)</h3>
+
+        <div class="cms-field">
+          <label for="social-youtube">YouTube</label>
+          <input type="url" id="social-youtube" class="cms-input" value="https://www.youtube.com/@RequielEdit">
+        </div>
+
+        <div class="cms-field">
+          <label for="social-tiktok">TikTok</label>
+          <input type="url" id="social-tiktok" class="cms-input" value="https://www.tiktok.com/@requiel.edit?lang=es-419">
+        </div>
+
+        <div class="cms-field">
+          <label for="social-instagram">Instagram</label>
+          <input type="url" id="social-instagram" class="cms-input" value="https://www.instagram.com/requiel.edit/">
+        </div>
+
+        <div class="cms-field">
+          <label for="social-facebook">Facebook</label>
+          <input type="url" id="social-facebook" class="cms-input" value="https://www.facebook.com/profile.php?id=61593797231488">
+        </div>
+
+        <div class="cms-field">
+          <label for="social-linkedin">LinkedIn</label>
+          <input type="url" id="social-linkedin" class="cms-input" value="https://www.linkedin.com/in/requiel-edit-a61267450/">
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 5: SEGURIDAD (PIN)
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel" id="tab-security">
+      <div class="cms-card">
+        <h3 class="cms-card-title">Cambiar PIN de Acceso al Panel</h3>
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Personaliza tu código de 4 dígitos para proteger este panel.
+        </p>
+
+        <div class="form-grid-2">
+          <div class="cms-field">
+            <label for="current-pin">PIN Actual</label>
+            <input type="password" maxlength="4" id="current-pin" class="cms-input" placeholder="****">
+          </div>
+          <div class="cms-field">
+            <label for="new-pin">Nuevo PIN (4 dígitos)</label>
+            <input type="password" maxlength="4" id="new-pin" class="cms-input" placeholder="****">
+          </div>
+        </div>
+
+        <button class="btn-cms-action primary" id="btn-change-pin">Actualizar PIN</button>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 6: COPIA DE SEGURIDAD
+         ----------------------------------------------------------------------- -->
+    <div class="cms-tab-panel" id="tab-backup">
+      <div class="cms-card">
+        <h3 class="cms-card-title">Exportar e Importar Configuración</h3>
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Descarga un archivo JSON de respaldo con todos tus textos, páginas, colores y multimedia, o cárgalo en cualquier momento.
+        </p>
+
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <button class="btn-cms-action primary" id="btn-export-json">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Descargar Backup JSON</span>
+          </button>
+
+          <label class="btn-cms-action" style="cursor: pointer;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Cargar Archivo JSON</span>
+            <input type="file" id="input-import-json" accept=".json" style="display: none;">
+          </label>
+
+          <button class="btn-cms-action" id="btn-reset-defaults" style="color: var(--admin-danger); border-color: rgba(255, 51, 102, 0.4);">
+            <span>Restablecer Valores de Fábrica</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Notificación Toast -->
+  <div class="admin-toast" id="admin-toast">¡Cambios guardados con éxito!</div>
+
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
